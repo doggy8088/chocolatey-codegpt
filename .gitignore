@@ -1,0 +1,6 @@
+*.nupkg
+publish.ps1
+LatestChocoVersion.txt
+LatestVersion.txt
+codegpt.nuspec
+tools/chocolateyinstall.ps1
