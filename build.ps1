@@ -8,6 +8,8 @@ $LatestVersion | Out-File -FilePath "LatestVersion.txt" -Encoding UTF8
 $LatestChocoVersion = "0.0.0"
 $AllChocoVersions = (choco list codegpt -r --all | C:\Windows\System32\sort.exe /r)
 
+Write-Output AllChocoVersions = $AllChocoVersions
+
 if ($AllChocoVersions -eq $null) {
   $AllChocoVersions = "codegpt|0.0.0"
 }
@@ -17,6 +19,8 @@ if ($AllChocoVersions.GetType().FullName -eq 'System.String') {
 } else {
   $LatestChocoVersion = ($AllChocoVersions[0] -split '\|')[1]
 }
+
+Write-Output LatestChocoVersion = $LatestChocoVersion
 
 $LatestChocoVersion | Out-File -FilePath "LatestChocoVersion.txt" -Encoding UTF8
 
@@ -98,8 +102,8 @@ Install-Module -Name PoshSemanticVersion -Force
 `$LatestChocoVersion = Get-Content LatestChocoVersion.txt
 `$LatestVersion = Get-Content LatestVersion.txt
 
-# Write-Output LatestChocoVersion = `$LatestChocoVersion
-# Write-Output LatestVersion = `$LatestVersion
+Write-Output LatestChocoVersion = `$LatestChocoVersion
+Write-Output LatestVersion = `$LatestVersion
 
 `$Precedence = (Compare-SemanticVersion -ReferenceVersion `$LatestChocoVersion -DifferenceVersion `$LatestVersion).Precedence;
 
@@ -116,4 +120,4 @@ else
   Write-Output "準備發行 codegpt `$LatestVersion 版本到 Chocolatey Gallery"
   choco push codegpt.`$LatestVersion.nupkg --source https://push.chocolatey.org/ --key=#{CHOCO_APIKEY}#
 }
-"@ | Out-File -FilePath publish.ps1 -Encoding UTF8
+"@ | Out-File -FilePath "publish.ps1" -Encoding UTF8
