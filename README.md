@@ -1,6 +1,6 @@
-## CodeGPT: Wwrites git commit messages or do a code review brief for you using ChatGPT AI
+## CodeGPT: writes git commit messages or do a code review brief for you using ChatGPT AI
 
-[![Build Status](https://willh.visualstudio.com/chocolatey-codegpt/_apis/build/status/chocolatey-codegpt-CI?branchName=master)](https://willh.visualstudio.com/chocolatey-codegpt/_build/latest?definitionId=58&branchName=master)
+[![Build Status](https://dev.azure.com/willh/chocolatey-codegpt/_apis/build/status%2Fdoggy8088.chocolatey-codegpt?branchName=master)](https://dev.azure.com/willh/chocolatey-codegpt/_build/latest?definitionId=111&branchName=master)
 
 Project Repo: <https://github.com/appleboy/CodeGPT>
 
