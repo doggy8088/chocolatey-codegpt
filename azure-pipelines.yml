@@ -5,6 +5,14 @@ pool:
 trigger:
 - master
 
+schedules:
+- cron: "0 0 * * *"
+  displayName: Daily midnight build
+  branches:
+    include:
+    - master
+  always: true
+
 steps:
 - task: qetza.replacetokens.replacetokens-task.replacetokens@3
   displayName: 'Replace #{CHOCO_APIKEY}#'
