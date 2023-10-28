@@ -6,7 +6,7 @@ $LatestVersion = $LatestJSON.tag_name -replace "v" -replace ""
 $LatestVersion | Out-File -FilePath "LatestVersion.txt" -Encoding UTF8
 
 $LatestChocoVersion = "0.0.0"
-$AllChocoVersions = (choco list codegpt -r --all | C:\Windows\System32\sort.exe /r)
+$AllChocoVersions = (choco search codegpt -r --all | C:\Windows\System32\sort.exe /r)
 
 Write-Output AllChocoVersions = $AllChocoVersions
 

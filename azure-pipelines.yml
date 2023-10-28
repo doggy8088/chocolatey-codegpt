@@ -17,11 +17,11 @@ steps:
 - powershell: 'choco --version'
   displayName: 'choco --version'
 
-- powershell: 'choco list codegpt -r --all'
-  displayName: 'choco list codegpt -r --all'
+- powershell: 'choco search codegpt -r --all'
+  displayName: 'choco search codegpt -r --all'
 
-- powershell: 'choco list codegpt -r --all | C:\Windows\System32\sort.exe /r'
-  displayName: 'choco list codegpt -r --all | C:\Windows\System32\sort.exe /r'
+- powershell: 'choco search codegpt -r --all | C:\Windows\System32\sort.exe /r'
+  displayName: 'choco search codegpt -r --all | C:\Windows\System32\sort.exe /r'
 
 - task: PowerShell@2
   displayName: 'choco pack'
