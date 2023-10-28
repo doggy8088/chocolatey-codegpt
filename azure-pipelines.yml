@@ -25,7 +25,13 @@ steps:
 - powershell: 'choco --version'
   displayName: 'choco --version'
 
-- powershell: 'choco search codegpt -r --all'
+- powershell: |
+    $versions = $(choco search codegpt -r --all)
+    if ($versions -eq $null) {
+      Write-Output '##vso[task.logissue type=error;]由於 CodeGPT 尚未上架到 Chocolatey 導致 choco search codegpt -r --all 找不到版本，因此無法繼續執行！'
+      # Write-Output '##vso[task.complete result=Failed;]'
+      exit 1
+    }
   displayName: 'choco search codegpt -r --all'
 
 - powershell: 'choco search codegpt -r --all | C:\Windows\System32\sort.exe /r'
