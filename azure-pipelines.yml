@@ -14,11 +14,20 @@ steps:
     escapeType: none
     verbosity: detailed
 
+- powershell: 'choco --version'
+  displayName: 'choco --version'
+
+- powershell: 'choco list codegpt -r --all'
+  displayName: 'choco list codegpt -r --all'
+
+- powershell: 'choco list codegpt -r --all | C:\Windows\System32\sort.exe /r'
+  displayName: 'choco list codegpt -r --all | C:\Windows\System32\sort.exe /r'
+
 - task: PowerShell@2
   displayName: 'choco pack'
   inputs:
     targetType: filePath
-    filePath: './.\build.ps1'
+    filePath: '.\build.ps1'
 
 - powershell: 'choco install codegpt -d -s . -y --no-progress'
   displayName: 'choco install codegpt -d -s . -y --no-progress'
