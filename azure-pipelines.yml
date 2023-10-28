@@ -23,6 +23,9 @@ steps:
 - powershell: 'choco install codegpt -d -s . -y --no-progress'
   displayName: 'choco install codegpt -d -s . -y --no-progress'
 
+- powershell: 'codegpt version'
+  displayName: 'codegpt version'
+
 - powershell: 'choco uninstall codegpt -d -s . -y --no-progress'
   displayName: 'choco uninstall codegpt -d -s . -y --no-progress'
 
