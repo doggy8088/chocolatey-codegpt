@@ -1,0 +1,41 @@
+pool:
+  name: Azure Pipelines
+  vmImage: windows-2019
+
+trigger:
+- master
+
+steps:
+- task: qetza.replacetokens.replacetokens-task.replacetokens@3
+  displayName: 'Replace #{CHOCO_APIKEY}#'
+  inputs:
+    rootDirectory: '$(Build.Repository.LocalPath)'
+    targetFiles: build.ps1
+    escapeType: none
+    verbosity: detailed
+
+- task: PowerShell@2
+  displayName: 'choco pack'
+  inputs:
+    targetType: filePath
+    filePath: './.\build.ps1'
+
+- powershell: 'choco install codegpt -d -s . -y --no-progress'
+  displayName: 'choco install codegpt -d -s . -y --no-progress'
+
+- powershell: 'choco uninstall codegpt -d -s . -y --no-progress'
+  displayName: 'choco uninstall codegpt -d -s . -y --no-progress'
+
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(Build.StagingDirectory)'
+  inputs:
+    SourceFolder: '$(Build.Repository.LocalPath)'
+    Contents: |
+     codegpt.*.nupkg
+     publish.ps1
+     LatestChocoVersion.txt
+     LatestVersion.txt
+    TargetFolder: '$(Build.StagingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
