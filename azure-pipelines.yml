@@ -14,14 +14,6 @@ schedules:
   always: true
 
 steps:
-- task: qetza.replacetokens.replacetokens-task.replacetokens@3
-  displayName: 'Replace #{CHOCO_APIKEY}#'
-  inputs:
-    rootDirectory: '$(Build.Repository.LocalPath)'
-    targetFiles: build.ps1
-    escapeType: none
-    verbosity: detailed
-
 - powershell: 'choco --version'
   displayName: 'choco --version'
 
