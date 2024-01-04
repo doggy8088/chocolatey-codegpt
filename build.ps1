@@ -6,21 +6,16 @@ $LatestVersion = $LatestJSON.tag_name -replace "v" -replace ""
 $LatestVersion | Out-File -FilePath "LatestVersion.txt" -Encoding UTF8
 
 $LatestChocoVersion = "0.0.0"
-$AllChocoVersions = (choco search codegpt --limit-output --all-versions --exact | C:\Windows\System32\sort.exe /r)
 
-Write-Output AllChocoVersions = $AllChocoVersions
+$AllChocoVersions = (choco search codegpt --limit-output --all-versions --exact)
+Write-Output "AllChocoVersions = $($AllChocoVersions -join ',')"
 
 if ($AllChocoVersions -eq $null) {
   $AllChocoVersions = "codegpt|0.0.0"
 }
 
-if ($AllChocoVersions.GetType().FullName -eq 'System.String') {
-  $LatestChocoVersion = ($AllChocoVersions -split '\|')[1]
-} else {
-  $LatestChocoVersion = ($AllChocoVersions[0] -split '\|')[1]
-}
-
-Write-Output LatestChocoVersion = $LatestChocoVersion
+$LatestChocoVersion = ($AllChocoVersions | ForEach-Object { ($_ -split '\|')[1] }) | Sort-Object -Descending | Select-Object -First 1
+Write-Output "LatestChocoVersion = $LatestChocoVersion"
 
 $LatestChocoVersion | Out-File -FilePath "LatestChocoVersion.txt" -Encoding UTF8
 

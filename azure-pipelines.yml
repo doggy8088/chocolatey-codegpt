@@ -17,17 +17,22 @@ steps:
 - powershell: 'choco --version'
   displayName: 'choco --version'
 
-- powershell: |
-    $versions = $(choco search codegpt --limit-output --all-versions --exact)
-    if ($versions -eq $null) {
-      Write-Output '##vso[task.logissue type=error;]由於 CodeGPT 尚未上架到 Chocolatey 導致 choco search codegpt --limit-output --all-versions --exact 找不到版本，因此無法繼續執行！'
-      # Write-Output '##vso[task.complete result=Failed;]'
-      exit 1
-    }
-  displayName: 'choco search codegpt --limit-output --all-versions --exact'
+# 第一次上架的時候才需要做這個判斷
+# - powershell: |
+#     $versions = $(choco search codegpt --limit-output --all-versions --exact)
+#     $versions
+#     if ($versions -eq $null) {
+#       Write-Output '##vso[task.logissue type=error;]由於 CodeGPT 尚未上架到 Chocolatey 導致 choco search codegpt --limit-output --all-versions --exact 找不到版本，因此無法繼續執行！'
+#       # Write-Output '##vso[task.complete result=Failed;]'
+#       exit 1
+#     }
+#   displayName: 'choco search codegpt --limit-output --all-versions --exact'
 
-- powershell: 'choco search codegpt --limit-output --all-versions --exact | C:\Windows\System32\sort.exe /r'
-  displayName: 'choco search codegpt --limit-output --all-versions --exact | C:\Windows\System32\sort.exe /r'
+- task: CmdLine@2
+  inputs:
+    script: |
+      choco search codegpt --limit-output --all-versions --exact
+  displayName: 'choco search codegpt --limit-output --all-versions --exact'
 
 - task: PowerShell@2
   displayName: 'choco pack'
